@@ -70,7 +70,7 @@ const extractDataFromPdf = async (dataBuffer: any) => {
                     .trim();
 
                 // Regular expression to match "Page 2 / 3" followed by any text (non-greedily)
-                let regex = /Page 2 \/ 3\s*(.*)/s;
+                let regex = /Page 2 \/ 3\s*([\s\S]*?)(?=\n\d)/;
 
                 // Test if the line matches the regex
                 let match = regex.exec(text);
@@ -79,8 +79,6 @@ const extractDataFromPdf = async (dataBuffer: any) => {
                     // match[1] contains the text after "Page 2 / 3"
                     let textAfterPage = match.join("+").split("\n")[1];
                     currentDescription += textAfterPage;
-                } else {
-                    console.log("No match found.");
                 }
 
                 results.push({
